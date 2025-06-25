@@ -1,4 +1,4 @@
-import React, { useEffect,useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useChatStore } from "../store/useChatStore.js";
 import ChatHeader from './ChatHeader.jsx';
 import MessageInput from './MessageInput.jsx';
@@ -7,22 +7,25 @@ import { useAuthStore } from '../store/useAuthStore.js';
 import { formatMessageTime } from "../lib/utils";
 
 const ChatContainer = () => {
-  const { messages = [], getMessages, isMessageLoading, selectedUser } = useChatStore();
+  const { messages = [], getMessages, isMessageLoading, selectedUser, subscribeToMessages, unsubscribeFromMessages } = useChatStore();
   const { authUser } = useAuthStore();
 
   useEffect(() => {
     if (selectedUser?._id) {
       getMessages(selectedUser._id);
     }
-  }, [selectedUser?._id, getMessages]);
+    subscribeToMessages()
+
+    return () => unsubscribeFromMessages()
+  }, [selectedUser?._id, getMessages,subscribeToMessages,unsubscribeFromMessages]);
 
   const messagesEndRef = useRef(null);
 
-useEffect(() => {
-  if (messagesEndRef.current) {
-    messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
-  }
-}, [messages]);
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages]);
 
 
   if (!selectedUser) {
@@ -43,7 +46,7 @@ useEffect(() => {
     );
   }
 
- // console.log(messages)
+  // console.log(messages)
 
   const capitalizeName = (name) => {
     return typeof name === 'string'
@@ -55,13 +58,13 @@ useEffect(() => {
     <div className="flex-1 flex flex-col overflow-auto">
       <ChatHeader />
 
-      <div className="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar">
+      <div className="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar" >
         {Array.isArray(messages) && messages.length > 0 ? (
           messages.map((message) => {
             if (!message || !message.senderId) return null;
-            
-            console.log(message.text);
-            
+
+           // console.log(message.text);
+
 
             const isSender = message.senderId === authUser?._id;
 
@@ -98,11 +101,10 @@ useEffect(() => {
 
                 {/* Bubble */}
                 <div
-                  className={`chat-bubble flex flex-col p-3 rounded-2xl max-w-xs sm:max-w-sm md:max-w-md shadow-md ${
-                    isSender
+                  className={`chat-bubble flex flex-col p-3 rounded-2xl max-w-xs sm:max-w-sm md:max-w-md shadow-md ${isSender
                       ? "bg-gradient-to-br from-emerald-900 to-green-950 text-white"
                       : "bg-gradient-to-br from-teal-700 to-teal-900 text-white"
-                  }`}
+                    }`}
                 >
                   {message.image && (
                     <img
@@ -124,7 +126,7 @@ useEffect(() => {
           <div className="text-center text-zinc-400 mt-4">No messages yet.</div>
         )}
       </div>
-
+      {/* <div ref={messagesEndRef} /> */}
       <MessageInput />
     </div>
   );

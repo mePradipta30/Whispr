@@ -4,7 +4,7 @@ import { useChatStore } from "../store/useChatStore.js";
 
 const ChatHeader = () => {
   const { selectedUser, setSelectedUser } = useChatStore();
-  const { onlineUsers = [] } = useAuthStore(); // Default to empty array
+  const { onlineUsers } = useAuthStore(); // Default to empty array
 
   const capitalizeName = (name = "") => {
     return name.replace(/\b\w/g, char => char.toUpperCase());

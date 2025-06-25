@@ -1,4 +1,5 @@
 import cloudinary from "../lib/cloudinary.js";
+import { getReceiverSocketId , io} from "../lib/socket.js";
 import { Message } from "../models/message.model.js";
 import { User } from "../models/user.model.js";
 
@@ -69,13 +70,17 @@ export const sendMessage = async (req, res) => {
       // messageId: new mongoose.Types.ObjectId() // generate a new ID for messageId
     })
 
+    // todo: SOCKET.IO
+    const receiverSocketId = getReceiverSocketId(receiverId)
+    if(receiverSocketId) {
+      io.to(receiverSocketId).emit("newMessage",newMessage)
+    }
+
     res.status(200).json({
       message: "Message sent successfully",
       newMessage: await newMessage.save()  // <- Use unique key 'newMessage'
     })
-
-    // todo: SOCKET.IO
-
+ 
   } catch (error) {
     console.log("Error in sendMessage controller", error.message);
     return res.status(500).json({ message: "Internal server error" });

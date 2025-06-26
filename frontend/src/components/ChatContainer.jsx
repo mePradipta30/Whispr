@@ -72,7 +72,7 @@ const ChatContainer = () => {
               <div
                 key={message._id}
                 className={`chat ${isSender ? "chat-end" : "chat-start"}`}
-                
+                 //ref={messagesEndRef}
               >
                 {/* Avatar */}
                 <div className="chat-image avatar">
@@ -126,7 +126,7 @@ const ChatContainer = () => {
           <div className="text-center text-zinc-400 mt-4">No messages yet.</div>
         )}
       </div>
-      {/* <div ref={messagesEndRef} /> */}
+      {/*  */}
       <MessageInput />
     </div>
   );

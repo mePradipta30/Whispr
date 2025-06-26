@@ -16,9 +16,9 @@ export const useChatStore = create((set, get) => ({
         try {
             const res = await axiosInstance.get("/messages/users");
 
-            console.log("Raw Response:", res);
-            console.log("Data:", res.data);
-            console.log("Users:", res.data.users);
+            // console.log("Raw Response:", res);
+            // console.log("Data:", res.data);
+            // console.log("Users:", res.data.users);
             set({ users: res.data.users })  // as users is an array
 
 

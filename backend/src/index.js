@@ -13,7 +13,7 @@ dotenv.config();
 
 // Port and Directory Setup
 const PORT = process.env.PORT || 5000;
-//const __dirname = path.resolve();
+const __dirname = path.resolve();
 
 // Middlewares
 app.use(express.json({ limit: "10mb" }));
@@ -29,13 +29,13 @@ app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
 
 // Serve frontend in production
-// if (process.env.NODE_ENV === "production") {
-//   app.use(express.static(path.join(__dirname, "../frontend/dist")));
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
-//   app.get("*", (req, res) => {
-//     res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
-//   });
-// }
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
+  });
+}
 
 // Start server
 server.listen(PORT, () => {

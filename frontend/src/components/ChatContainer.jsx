@@ -64,7 +64,7 @@ const ChatContainer = () => {
             if (!message || !message.senderId) return null;
             const isLastMessage = index === messages.length - 1
 
-           // console.log(message.text);
+          
 
 
             const isSender = message.senderId === authUser?._id;
@@ -74,7 +74,7 @@ const ChatContainer = () => {
                 key={message._id}
                 ref={isLastMessage ? messagesEndRef : null} 
                 className={`chat ${isSender ? "chat-end" : "chat-start"}`}
-                 //ref={messagesEndRef}
+                 
               >
                 {/* Avatar */}
                 <div className="chat-image avatar">

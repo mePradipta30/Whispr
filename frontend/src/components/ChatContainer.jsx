@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useChatStore } from "../store/useChatStore.js";
 import ChatHeader from './ChatHeader.jsx';
 import MessageInput from './MessageInput.jsx';
@@ -22,8 +22,8 @@ const ChatContainer = () => {
   const messagesEndRef = useRef(null);
 
   useEffect(() => {
-    if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    if (messagesEndRef.current && messages) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" ,block: "end"});
     }
   }, [messages]);
 
@@ -60,8 +60,9 @@ const ChatContainer = () => {
 
       <div className="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar" >
         {Array.isArray(messages) && messages.length > 0 ? (
-          messages.map((message) => {
+          messages.map((message,index) => {
             if (!message || !message.senderId) return null;
+            const isLastMessage = index === messages.length - 1
 
            // console.log(message.text);
 
@@ -71,6 +72,7 @@ const ChatContainer = () => {
             return (
               <div
                 key={message._id}
+                ref={isLastMessage ? messagesEndRef : null} 
                 className={`chat ${isSender ? "chat-end" : "chat-start"}`}
                  //ref={messagesEndRef}
               >

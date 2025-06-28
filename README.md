@@ -11,7 +11,7 @@ A real-time chat application built with **Node.js**, **Express**, **Socket.IO**,
 ---
 | Login | Chat UI |
 |-------|---------|
-| ![Login Screenshot](./screenshots/whisprHome.png) | ![Chat Screenshot](./screenshots/whisprChat.png) |
+| ![Login Screenshot](./ScreenShots/LoginPage.png) | ![Chat Screenshot](./ScreenShots/HomePage.png) |
 
 ## 🚀 Features
 

@@ -26,7 +26,7 @@ const ChatHeader = () => {
           <div className="relative">
             <img
               src={selectedUser.profilePic || "/avatar.png"}
-              alt={selectedUser.fullname}
+              alt={selectedUser.fullName}
               className="size-12 md:size-14 object-cover rounded-full border-2 border-white shadow-lg"
             />
             {isOnline && (
@@ -37,7 +37,7 @@ const ChatHeader = () => {
           {/* Name & Status */}
           <div className="flex flex-col">
             <h3 className="font-semibold text-rose-200 text-base md:text-lg truncate">
-              {capitalizeName(selectedUser.fullname)}
+              {capitalizeName(selectedUser.fullName)}
             </h3>
             <p className={`text-xs md:text-sm font-medium ${isOnline ? "text-green-600" : "text-zinc-400"}`}>
               {isOnline ? "Online" : "Offline"}

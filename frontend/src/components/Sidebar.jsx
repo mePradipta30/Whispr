@@ -74,7 +74,7 @@ const Sidebar = () => {
             </button>
           ))
         ) : (
-          <p className="text-center text-zinc-400 py-4">No online users</p>
+          <p className="text-center font-mono text-xl text-red-800/90 py-4">No Online users</p>
         )}
       </div>
     </aside>
